@@ -1,18 +1,40 @@
 pipeline {
 
     agent any
-	tools{nodejs "NodeJS"}
+	tools {nodejs "NodeJS"}
     stages {
+        stage('Build') {
+            steps {
+                echo 'Buid...'
+                //checkout scm
+		sh 'npm install'
+            }
+            post {
+        	failure {
+            		emailext attachLog: true,
+                	body: "${currentBuild.currentResult}:  build ${env.BUILD_NUMBER} Job ${env.JOB_NAME}",
+                	to: 'sosinkuba99@gmail.com',
+                	subject: "Build result - fail"
+        	}
+        	success {
+            		emailext attachLog: true,
+                	body: "${currentBuild.currentResult}:  build ${env.BUILD_NUMBER} Job ${env.JOB_NAME}",
+                	to: 'sosinkuba99@gmail.com',
+                	subject: "Build result - success"
+        	}
+    		}
+        }
+        
+        
         
         stage('Test') {
+            when {
+            currentBuild.result === 'SUCCESS'
+            }
             steps {
-                echo 'Test...'
-		sh 'npm installwwa'
+               echo 'Test...'
                 sh 'npm run test'
             }
-        }
-    }
-    
     post {
     
     	always {
@@ -20,7 +42,10 @@ pipeline {
     	}
     	
     	success {
-	    echo 'Success'
+	emailext attachLog: true,
+                body: "${currentBuild.currentResult}:  build ${env.BUILD_NUMBER} Job ${env.JOB_NAME}",
+                to: 'sosinkuba99@gmail.com',
+                subject: "Result- success"
     	}
     	
         failure {
@@ -28,7 +53,9 @@ pipeline {
             emailext attachLog: true,
                 body: "${currentBuild.currentResult}:  build ${env.BUILD_NUMBER} Job ${env.JOB_NAME}",
                 to: 'sosinkuba99@gmail.com',
-                subject: "Result-test failed"
+                subject: "Result- failed"
         }
     }
+}
+}
 }
