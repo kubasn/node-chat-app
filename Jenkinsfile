@@ -28,9 +28,6 @@ pipeline {
         
         
         stage('Test') {
-            when {
-            currentBuild.result === 'SUCCESS'
-            }
             steps {
                echo 'Test...'
                 sh 'npm run test'
