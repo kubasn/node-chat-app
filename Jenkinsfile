@@ -42,7 +42,7 @@ pipeline {
 	emailext attachLog: true,
                 body: "${currentBuild.currentResult}:  build ${env.BUILD_NUMBER} Job ${env.JOB_NAME}",
                 to: 'sosinkuba99@gmail.com',
-                subject: "Result- success"
+                subject: "Test result- success"
     	}
     	
         failure {
@@ -50,7 +50,7 @@ pipeline {
             emailext attachLog: true,
                 body: "${currentBuild.currentResult}:  build ${env.BUILD_NUMBER} Job ${env.JOB_NAME}",
                 to: 'sosinkuba99@gmail.com',
-                subject: "Result- failed"
+                subject: "Test result- failed"
         }
     }
 }
@@ -67,7 +67,7 @@ pipeline {
 		emailext attachLog: true,
                 body: "${currentBuild.currentResult}:  build ${env.BUILD_NUMBER} Job ${env.JOB_NAME}",
                 to: 'sosinkuba99@gmail.com',
-                subject: "Result- success"
+                subject: "Deploy result- success"
                 }
         
                 failure {
@@ -75,7 +75,7 @@ pipeline {
             	emailext attachLog: true,
                 body: "${currentBuild.currentResult}:  build ${env.BUILD_NUMBER} Job ${env.JOB_NAME}",
                 to: 'sosinkuba99@gmail.com',
-                subject: "Result- failed"
+                subject: "Deploy result- failed"
                 }
             }
         }
