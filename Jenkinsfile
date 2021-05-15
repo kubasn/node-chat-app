@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Buid...'
-                //checkout scm
+                //checkout scm//
 		sh 'npm install'
             }
             post {
