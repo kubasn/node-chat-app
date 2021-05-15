@@ -7,7 +7,7 @@ pipeline {
             steps {
                 echo 'Buid...'
                 //checkout scm
-		sh 'npm instasll'
+		sh 'npm install'
             }
             post {
         	failure {
